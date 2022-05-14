@@ -1,3 +1,6 @@
+#ifndef VECH
+#define VECH
+
 #include <math.h>
 #include <stdlib.h>
 #include <iostream>
@@ -24,7 +27,9 @@ public:
 	inline vec3& operator*=(const vec3 &v2);
 	inline vec3& operator/=(const vec3 &v2);
 	inline vec3& operator*=(const float t);
-	inline vec3& operator/=(const float t);
+	//inline vec3& operator/=(const float t);
+	
+	inline vec3& operator/=(const double t) {return *this *= 1/t;}
 	
 	inline float length() const {return sqrt(e[0]*e[0] + e[1]*e[1] + e[2]*e[2]);}
 	inline float length_squared() const {return e[0]*e[0] + e[1]*e[1] + e[2]*e[2];}
@@ -110,17 +115,16 @@ inline vec3& vec3::operator*=(const float t) {
  e[2] *= t;
  return *this;
 }
-inline vec3& vec3::operator/=(const float t) {
- float k = 1.0/t;
- e[0] /= k;
- e[1] /= k;
- e[2] /= k;
- return *this;
-}
+
 inline vec3 unit_vector(vec3 v) {
  return v / v.length();
 }
 
+vec3 reflect(const vec3& v, const vec3& n) {
+ return v - 2*dot(v,n)*n;
+}
+
+#endif
 
 
 
